@@ -1,19 +1,29 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Habitos from "./Components/Habitos"
-import Header from "./Components/Header"
-import Login from "./Components/Login"
-import Cadastro from "./Components/Cadastro"
-import Footer from "./Components/Footer"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Habit from "./Components/Habit";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
+import History from "./Components/History";
+import Today from "./Components/Today";
+import ImageContext from "./contexts/ImageContext";
+import { useState } from "react";
+
+
 export default function App() {
+	const [userImage, setUserImage] = useState([]);
+    const contextImage = { userImage, setUserImage };
+
+
     return (
         <BrowserRouter>
-        <Header />
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/habitos" element={<Habitos />} />
-                <Route path="/cadastro" element={<Cadastro />} />
-            </Routes>
-            <Footer />
+            <ImageContext.Provider value={contextImage}>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/habit" element={<Habit />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/history" element={<History />} />
+                    <Route path="/today" element={<Today />} />
+                </Routes>
+            </ImageContext.Provider>
         </BrowserRouter>
     )
 }

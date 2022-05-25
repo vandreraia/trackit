@@ -2,24 +2,24 @@ import styled from 'styled-components';
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
-export default function Cadastro() {
-    let navigate = useNavigate();
+export default function Register() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [name, setName] = useState();
     const [image, setImage] = useState();
-    const [account, setAccount] = useState();
     const [loading, setLoading] = useState(false);
 
     function registerAcount(event) {
-        // const obj = {
-        //     email: "jae@respondeai.com.br",
+        // const body = {
+        //     email: "jaes@respondeai.com.br",
         //     password: "123456",
         //     name: "Joe",
         //     image: "https://http.cat/411.jpg"
         // };
-        const obj = {
+        const body = {
             email,
             password,
             name,
@@ -27,9 +27,9 @@ export default function Cadastro() {
         };
         setLoading(true);
         event.preventDefault();
-        console.log(obj)
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", obj);
-        promise.then(() =>{
+        console.log(body)
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body);
+        promise.then(() => {
             setLoading(false);
             navigate("/");
         }
@@ -40,18 +40,17 @@ export default function Cadastro() {
         }
         );
     }
-    console.log(account)
     return (
         <>
             <Container>
                 <h1>Trackit</h1>
+
                 <input disabled={loading ? true : false} type="email" placeholder="e-mail" onChange={e => setEmail(e.target.value)}></input>
                 <input disabled={loading ? true : false} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)}></input>
                 <input disabled={loading ? true : false} type="text" placeholder="nome" onChange={e => setName(e.target.value)}></input>
                 <input disabled={loading ? true : false} type="text" placeholder="foto" onChange={e => setImage(e.target.value)}></input>
-                <Link to="/">
-                    <button onClick={registerAcount}>Cadastrar</button>
-                </Link>
+                <button onClick={registerAcount}><PropagateLoader size={10} loading={loading} color="white" />{loading ? "" : "Cadastrar"}</button>
+
                 <Link to="/">
                     <p>Já tem uma conta? Faça login!</p>
                 </Link>
@@ -65,6 +64,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
+background-color: white;
 p {
     color: #52B6FF;
     font-style: normal;
@@ -81,12 +81,21 @@ h1 {
 button {
     background-color: #52B6FF;
     height: 45px;
-    width: 100%;
+    width: 90%;
     border-width: 0;
     border-radius: 3px;
     color: #ffffff;
-    padding: 10px 20px;
-    margin: 20px 10px 10px 0px;
+    margin: 0px 0px 10px 0px;
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+input {
+    height: 45px;
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;
+    width: 90%;
+    margin: 3px;
 }
 `

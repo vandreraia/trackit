@@ -1,20 +1,57 @@
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import UserContext from "../contexts/ImageContext";
+import PropagateLoader from "react-spinners/PropagateLoader";
+
 export default function Login() {
+    const { userImage, setUserImage } = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
+    function login(event) {
+        event.preventDefault();
+        const body2 = {
+            email: "je@respondeai.com.br",
+            password: "123456"
+        };
+        const body = {
+            email,
+            password
+        };
+        setLoading(true);
+
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+            body2);
+        promise.then((res) => {
+            console.log(res.data);
+            setUserImage(res.data.image)
+            setLoading(false);
+            navigate("/today");
+        }
+        )
+
+        promise.catch(() => {
+            setLoading(false);
+            console.log("falha de login");
+        }
+        );
+    }
+
     return (
         <>
             <Container>
                 <h1>Trackit</h1>
-                <input type="email" placeholder="e-mail"></input>
-                <input type="password" placeholder="senha"></input>
-                <Link to="/habitos">
-                    <button>Entrar</button>
-                </Link>
+                <input disabled={loading ? true : false} type="email" placeholder="e-mail" onChange={e => setEmail(e.target.value)}></input>
+                <input disabled={loading ? true : false} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)}></input>
+                <button onClick={login}><PropagateLoader size={10} loading={loading} color="white" />{loading ? "" : "Entrar"}</button>
                 <Link to="/cadastro">
-                <p>Não tem uma conta? Cadastre-se!</p>
-                
+                    <p>Não tem uma conta? Cadastre-se!</p>
+
                 </Link>
             </Container>
         </>
@@ -37,16 +74,27 @@ const Container = styled.div`
         font-family: 'Playball', cursive;
         font-style: normal;
         font-weight: 400;
-        font-size: 68.982px;
+        font-size: 70px;
     }
     button {
         background-color: #52B6FF;
         height: 45px;
-        width: 100%;
+        width: 90%;
         border-width: 0;
         border-radius: 3px;
         color: #ffffff;
-        padding: 10px 20px;
-        margin: 20px 10px 10px 0px;
+        margin: 0px 0px 10px 0px;
+        padding: 0;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    input {
+        height: 45px;
+        border: 1px solid #D5D5D5;
+        border-radius: 5px;
+        width: 90%;
+        margin: 3px;
     }
 `

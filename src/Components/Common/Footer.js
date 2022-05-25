@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 export default function Footer() {
     return (
         <Container>
-            <Link to="/habitos">
+            <Link to="/habit">
                 <p>Hábitos</p>
             </Link>
+            <Link to="/today">
+            <button>Hoje</button>
+            </Link>
+            <Link to="/history">
             <p>Histórico</p>
+            </Link>
         </Container>
     )
 }

@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
-import avatar from "../img/Rectangle 14.png"
+import UserContext from "../../contexts/ImageContext";
+import { useState, useEffect, useContext } from "react";
 
 export default function Header() {
+    const { userImage, setUserImage } = useContext(UserContext);
+    console.log(userImage)
     return (
         <Link to="/">
             <Head>
                 <h1>Trackit</h1>
-                <img src={avatar} alt="avatar" />
+                <img src={userImage} alt="avatar" />
             </Head>
             <Invisible></Invisible>
         </Link>
@@ -31,6 +34,11 @@ const Head = styled.div`
         color: #FFFFFF;
         font-size: 38.982px;
         font-family: 'Playball', cursive;
+    }
+
+    img {
+        width: 50px;
+        object-fit: contain;
     }
 `
 

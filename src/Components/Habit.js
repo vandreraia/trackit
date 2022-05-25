@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import Header from "./Common/Header";
+import Footer from "./Common/Footer";
 
-export default function Habitos() {
+export default function Habits() {
 
     function createHabit() {
         return (
-            <Habito>
+            <Habit>
                 <input type="text" placeholder='nome do hábito'></input>
                 <div>
                     <button>D</button>
@@ -20,20 +22,20 @@ export default function Habitos() {
                     <button>Cancelar</button>
                     <button>Salvar</button>
                 </div>
-            </Habito>
-
+            </Habit>
         )
     }
 
     return (
         <Container>
-            <AddHabito>
+            <Header />
+            <AddHabit>
                 <p>Meus hábitos</p>
                 <button onClick={() => createHabit()}>
                     <ion-icon color="#FFFFFF" name="add-outline"></ion-icon>
                 </button>
-            </AddHabito>
-            <Habito>
+            </AddHabit>
+            <Habit>
                 <input type="text" placeholder='nome do hábito'></input>
                 <div>
                     <Days selected={true}>D</Days>
@@ -48,8 +50,9 @@ export default function Habitos() {
                     <Button>Cancelar</Button>
                     <Button bg={true}>Salvar</Button>
                 </div>
-            </Habito>
+            </Habit>
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+            <Footer />
         </Container>
     )
 }
@@ -74,7 +77,7 @@ const Days = styled.button`
     color: ${props => props.selected ? "white" : "#DBDBDB"};
 `
 
-const Habito = styled.div`
+const Habit = styled.div`
     background-color: white;
     padding: 20px;
 
@@ -94,7 +97,7 @@ const Habito = styled.div`
     }
 `
 
-const AddHabito = styled.div`
+const AddHabit = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
