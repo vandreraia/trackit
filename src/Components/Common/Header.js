@@ -5,7 +5,6 @@ import { useState, useEffect, useContext } from "react";
 
 export default function Header() {
     const { userImage, setUserImage } = useContext(UserContext);
-    console.log(userImage)
     return (
         <Link to="/">
             <Head>

@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import Header from "./Common/Header";
 import Footer from "./Common/Footer";
+import { useState, useEffect, useContext } from "react";
 
 export default function Habits() {
+    const [showHabit, setShowHabit] = useState(false);
 
     function createHabit() {
         return (
@@ -31,10 +33,11 @@ export default function Habits() {
             <Header />
             <AddHabit>
                 <p>Meus hábitos</p>
-                <button onClick={() => createHabit()}>
+                <button onClick={() => setShowHabit(true)}>
                     <ion-icon color="#FFFFFF" name="add-outline"></ion-icon>
                 </button>
             </AddHabit>
+            {showHabit ? 
             <Habit>
                 <input type="text" placeholder='nome do hábito'></input>
                 <div>
@@ -48,9 +51,10 @@ export default function Habits() {
                 </div>
                 <div>
                     <Button>Cancelar</Button>
-                    <Button bg={true}>Salvar</Button>
+                    <Button onClick={() => setShowHabit(false)} bg={true}>Salvar</Button>
                 </div>
-            </Habit>
+            </Habit> : ""
+            }
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             <Footer />
         </Container>
