@@ -7,6 +7,7 @@ import Today from "./Components/Today";
 import ImageContext from "./contexts/ImageContext";
 import HabitContext from "./contexts/HabitContext";
 import TokenContext from "./contexts/TokenContext";
+import MyHabitContext from "./contexts/MyHabitContext";
 import { useState } from "react";
 
 
@@ -15,6 +16,8 @@ export default function App() {
     const contextImage = { userImage, setUserImage };
     const [habitList, setHabitList] = useState([])
     const habitContext = { habitList, setHabitList };
+    const [myHabits, setMyHabits] = useState([])
+    const myHabitContext = { myHabits, setMyHabits };
     const [token, setToken] = useState()
     const tokenContext = { token, setToken };
 
@@ -23,13 +26,17 @@ export default function App() {
         <BrowserRouter>
             <ImageContext.Provider value={contextImage}>
                 <HabitContext.Provider value={habitContext}>
-                    <Routes>
-                        <Route path="/" element={<Login />} />
-                        <Route path="/habit" element={<Habit />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/history" element={<History />} />
-                        <Route path="/today" element={<Today />} />
-                    </Routes>
+                    <MyHabitContext.Provider value={myHabitContext}>
+                        <TokenContext.Provider value={tokenContext}>
+                            <Routes>
+                                <Route path="/" element={<Login />} />
+                                <Route path="/habit" element={<Habit />} />
+                                <Route path="/register" element={<Register />} />
+                                <Route path="/history" element={<History />} />
+                                <Route path="/today" element={<Today />} />
+                            </Routes>
+                        </TokenContext.Provider>
+                    </MyHabitContext.Provider>
                 </HabitContext.Provider>
             </ImageContext.Provider>
         </BrowserRouter>

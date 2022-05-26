@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const habitContext = createContext();
+const HabitContext = createContext();
 
-export default habitContext;
+export default HabitContext;

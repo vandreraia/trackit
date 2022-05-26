@@ -4,59 +4,48 @@ import Header from "./Common/Header";
 import Footer from "./Common/Footer";
 import { useState, useEffect, useContext } from "react";
 import HabitContext from "../contexts/HabitContext";
+import MyHabit from './MyHabit';
+import TokenContext from '../contexts/TokenContext';
+import MyHabitContext from '../contexts/MyHabitContext';    
 import axios from 'axios';
+import MapDays from './MapDays';
 
-function MapDays({ day, nDay }) {
-    const [clicked, setClicked] = useState(false);
-    const { habitList, setHabitList } = useContext(HabitContext);
-
-    function createArr() {
-        if (habitList.find(e => e === nDay) === undefined) {
-            setHabitList([...habitList, nDay])
-        } else {
-            setHabitList(habitList.filter(e => e !== nDay))
-        }
-        setClicked(!clicked)
-    }
-
-    return (
-        <Days selected={clicked} onClick={() => createArr()}>{day}</Days>
-    )
-}
 
 export default function Habits() {
     const { habitList, setHabitList } = useContext(HabitContext);
-    const [showHabit, setShowHabit] = useState(true);
+    const { token, setToken } = useContext(TokenContext);
+    const [showHabit, setShowHabit] = useState(false);
     const [habit, setHabit] = useState();
     const [loading, setLoading] = useState(true);
     const letters = ["D", "S", "T", "Q", "Q", "S", "S"];
+    const { myHabits, setMyHabits } = useContext(MyHabitContext);
 
     function postHabit() {
         const body ={
             name: {habit},
-            days: {habitList} // segunda, quarta e sexta
+            days: {habitList}
         };
-
         const body2 = {
             name: "Nome do hábito",
             days: [1, 3, 5]
         };
-
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }
-        
+        };
+
+        setLoading(true)
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
-        body2);
-        promise.then(() =>
-        console.log("a"))
+        body2, config);
+        promise.then(() =>{
+            setLoading(false);
+            setShowHabit(false);
+        }
+        )
         promise.catch(() =>
         console.log("habitpost error"))
-        setShowHabit(false);
     }
-
     return (
         <Container>
             <Header />
@@ -81,6 +70,10 @@ export default function Habits() {
                 </Habit> : ""
             }
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+            
+            {myHabits.map((habit, index) => 
+                <MyHabit key={index} habit={habit.name} selectedDays={habit.days}/>
+            )}
             <Footer />
         </Container>
     )
@@ -94,16 +87,6 @@ border-radius: 3px;
 font-size: 16px;
 background-color: ${props => props.bg ? "#52B6FF" : "white"};
 color: ${props => props.bg ? "white" : "#52B6FF"};
-`
-
-const Days = styled.button`
-    width: 30px;
-    height: 30px;
-    margin: 2px;
-    border: 1px solid #D5D5D5;
-    border-radius: 5px;
-    background-color: ${props => props.selected ? "#CFCFCF" : "white"};
-    color: ${props => props.selected ? "white" : "#DBDBDB"};
 `
 
 const Habit = styled.div`

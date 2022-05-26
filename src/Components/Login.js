@@ -3,11 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import UserContext from "../contexts/ImageContext";
+import ImageContext from "../contexts/ImageContext";
+import TokenContext from '../contexts/TokenContext';
 import PropagateLoader from "react-spinners/PropagateLoader";
 
+
 export default function Login() {
-    const { userImage, setUserImage } = useContext(UserContext);
+    const { userImage, setUserImage } = useContext(ImageContext);
+    const { token, setToken } = useContext(TokenContext);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [email, setEmail] = useState();
@@ -29,6 +32,7 @@ export default function Login() {
             body2);
         promise.then((res) => {
             setUserImage(res.data.image)
+            setToken(res.data.token)
             setLoading(false);
             navigate("/today");
         }
