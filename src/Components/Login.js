@@ -15,6 +15,7 @@ export default function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const localUser = localStorage.getItem("token");
 
     function login(event) {
         event.preventDefault();
@@ -32,9 +33,15 @@ export default function Login() {
             body2);
         promise.then((res) => {
             setUserImage(res.data.image)
-            setToken(res.data.token)
+            setToken({
+                headers: {
+                    Authorization: `Bearer ${res.data.token}`
+                }
+            });
             setLoading(false);
             navigate("/today");
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("image", res.data.image);
         }
         )
 
@@ -43,6 +50,16 @@ export default function Login() {
             console.log("falha de login");
         }
         );
+    }
+
+    if (localUser) {
+        setToken({
+            headers: {
+                Authorization: `Bearer ${localUser}`
+            }
+        });
+        setUserImage(localStorage.getItem("image"))
+        navigate("/today");
     }
 
     return (

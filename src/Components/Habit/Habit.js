@@ -1,50 +1,43 @@
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
-import Header from "./Common/Header";
-import Footer from "./Common/Footer";
+import Header from "../Common/Header";
+import Footer from "../Common/Footer";
 import { useState, useEffect, useContext } from "react";
-import HabitContext from "../contexts/HabitContext";
+import HabitContext from "../../contexts/HabitContext";
 import MyHabit from './MyHabit';
-import TokenContext from '../contexts/TokenContext';
-import MyHabitContext from '../contexts/MyHabitContext';    
+import TokenContext from '../../contexts/TokenContext';
+import MyHabitContext from '../../contexts/MyHabitContext';
 import axios from 'axios';
 import MapDays from './MapDays';
 
 
 export default function Habits() {
     const { habitList, setHabitList } = useContext(HabitContext);
-    const { token, setToken } = useContext(TokenContext);
+    const { token } = useContext(TokenContext);
     const [showHabit, setShowHabit] = useState(false);
     const [habit, setHabit] = useState();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const letters = ["D", "S", "T", "Q", "Q", "S", "S"];
     const { myHabits, setMyHabits } = useContext(MyHabitContext);
 
     function postHabit() {
-        const body ={
-            name: {habit},
-            days: {habitList}
+        const body = {
+            name: habit,
+            days: habitList
         };
         const body2 = {
             name: "Nome do hábito",
             days: [1, 3, 5]
         };
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        };
-
         setLoading(true)
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
-        body2, config);
-        promise.then(() =>{
+            body, token);
+        promise.then(() => {
             setLoading(false);
             setShowHabit(false);
         }
         )
         promise.catch(() =>
-        console.log("habitpost error"))
+            console.log("habitpost error"))
     }
     return (
         <Container>
@@ -69,11 +62,12 @@ export default function Habits() {
                     </div>
                 </Habit> : ""
             }
-            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-            
-            {myHabits.map((habit, index) => 
-                <MyHabit key={index} habit={habit.name} selectedDays={habit.days}/>
-            )}
+
+            {myHabits.length !== 0
+                ? myHabits.map((habit, index) =>
+                    <MyHabit key={index} id={habit.id} habit={habit.name} selectedDays={habit.days} />
+                )
+                : <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>}
             <Footer />
         </Container>
     )

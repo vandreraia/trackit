@@ -1,16 +1,27 @@
 
-import MyHabitContext from '../contexts/MyHabitContext';
+import MyHabitContext from '../../contexts/MyHabitContext';
 import { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
 import MapDays from './MapDays';
+import axios from 'axios';
+import TokenContext from '../../contexts/TokenContext';
 
-export default function MyHabit({ habit, selectedDays }) {
+export default function MyHabit({ habit, selectedDays, id }) {
     const { myHabits, setMyHabits } = useContext(MyHabitContext);
     const letters = ["D", "S", "T", "Q", "Q", "S", "S"];
-    console.log(selectedDays)
+    const { token } = useContext(TokenContext);
+
+    function deleteHabit() {
+        let toggle = true;
+        axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, token)
+        .then(() => alert("confirm?"))
+    }
+
     return (
         <Habit>
-            <div>{habit}</div>
+            <div>
+                {habit}
+                <ion-icon onClick={deleteHabit} name="trash-outline"></ion-icon></div>
             <div>
                 {letters.map((day, index) =>
                     <Days key={index} selected={selectedDays.find(e => e === index) ? true : false}>{day}</Days>
@@ -31,8 +42,12 @@ const Habit = styled.div`
         font-size: 20px;
         border: 1px solid #D5D5D5;
     }
+    div:first-child {
+        display: flex;
+        justify-content: space-between;
+    }
     div:nth-child(2) {
-        margin: 10px 0 30px 0;
+        margin: 10px 0 0px 0;
     }
 `
 

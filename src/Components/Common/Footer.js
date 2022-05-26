@@ -14,17 +14,17 @@ export default function Footer() {
             <Link to="/today">
                 <div>
 
-                <CircularProgressbar value={percentage} text={`Hoje`} backgroundPadding={10}
-                    styles={buildStyles({
-                        textSize: "18px",
-                        
-                        pathColor: `rgba(255, 255, 255, ${percentage / 100})`,
-                        textColor: 'black',
-                        trailColor: '#52B6FF',
-                        backgroundColor: '#52B6FF',
-                    })} 
+                    <CircularProgressbar value={percentage} text={`Hoje`} backgroundPadding={10}
+                        styles={buildStyles({
+                            textSize: "18px",
+
+                            pathColor: `rgba(255, 255, 255, ${percentage / 100})`,
+                            textColor: 'black',
+                            trailColor: '#52B6FF',
+                            backgroundColor: '#52B6FF',
+                        })}
                     />
-                    </div>
+                </div>
             </Link>
             <Link to="/history">
                 <p>Histórico</p>
@@ -50,6 +50,7 @@ const Container = styled.div`
     }
 
     div {
+        width: 100px;
         /* background-color: #52B6FF; */
     }
 `
