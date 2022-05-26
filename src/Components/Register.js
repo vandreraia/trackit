@@ -13,12 +13,12 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
 
     function registerAcount(event) {
-        // const body = {
-        //     email: "jaes@respondeai.com.br",
-        //     password: "123456",
-        //     name: "Joe",
-        //     image: "https://http.cat/411.jpg"
-        // };
+        const body2 = {
+            email: "jadses@respondeai.com.br",
+            password: "123456",
+            name: "Joe",
+            image: "https://http.cat/411.jpg"
+        };
         const body = {
             email,
             password,
@@ -28,8 +28,10 @@ export default function Register() {
         setLoading(true);
         event.preventDefault();
         console.log(body)
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body);
-        promise.then(() => {
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up"
+        , body);
+        promise.then((res) => {
+            console.log(res)
             setLoading(false);
             navigate("/");
         }

@@ -3,29 +3,58 @@ import { Link } from "react-router-dom";
 import Header from "./Common/Header";
 import Footer from "./Common/Footer";
 import { useState, useEffect, useContext } from "react";
+import HabitContext from "../contexts/HabitContext";
+import axios from 'axios';
+
+function MapDays({ day, nDay }) {
+    const [clicked, setClicked] = useState(false);
+    const { habitList, setHabitList } = useContext(HabitContext);
+
+    function createArr() {
+        if (habitList.find(e => e === nDay) === undefined) {
+            setHabitList([...habitList, nDay])
+        } else {
+            setHabitList(habitList.filter(e => e !== nDay))
+        }
+        setClicked(!clicked)
+    }
+
+    return (
+        <Days selected={clicked} onClick={() => createArr()}>{day}</Days>
+    )
+}
 
 export default function Habits() {
-    const [showHabit, setShowHabit] = useState(false);
+    const { habitList, setHabitList } = useContext(HabitContext);
+    const [showHabit, setShowHabit] = useState(true);
+    const [habit, setHabit] = useState();
+    const [loading, setLoading] = useState(true);
+    const letters = ["D", "S", "T", "Q", "Q", "S", "S"];
 
-    function createHabit() {
-        return (
-            <Habit>
-                <input type="text" placeholder='nome do hábito'></input>
-                <div>
-                    <button>D</button>
-                    <button>S</button>
-                    <button>T</button>
-                    <button>Q</button>
-                    <button>Q</button>
-                    <button>S</button>
-                    <button>S</button>
-                </div>
-                <div>
-                    <button>Cancelar</button>
-                    <button>Salvar</button>
-                </div>
-            </Habit>
-        )
+    function postHabit() {
+        const body ={
+            name: {habit},
+            days: {habitList} // segunda, quarta e sexta
+        };
+
+        const body2 = {
+            name: "Nome do hábito",
+            days: [1, 3, 5]
+        };
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+        body2);
+        promise.then(() =>
+        console.log("a"))
+        promise.catch(() =>
+        console.log("habitpost error"))
+        setShowHabit(false);
     }
 
     return (
@@ -37,23 +66,19 @@ export default function Habits() {
                     <ion-icon color="#FFFFFF" name="add-outline"></ion-icon>
                 </button>
             </AddHabit>
-            {showHabit ? 
-            <Habit>
-                <input type="text" placeholder='nome do hábito'></input>
-                <div>
-                    <Days selected={true}>D</Days>
-                    <Days>S</Days>
-                    <Days>T</Days>
-                    <Days>Q</Days>
-                    <Days>Q</Days>
-                    <Days>S</Days>
-                    <Days>S</Days>
-                </div>
-                <div>
-                    <Button>Cancelar</Button>
-                    <Button onClick={() => setShowHabit(false)} bg={true}>Salvar</Button>
-                </div>
-            </Habit> : ""
+            {showHabit ?
+                <Habit>
+                    <input disabled={loading ? true : false} type="text" placeholder='nome do hábito' onChange={e => setHabit(e.target.value)}></input>
+                    <div>
+                        {letters.map((day, index) =>
+                            <MapDays day={day} key={index} nDay={index} />
+                        )}
+                    </div>
+                    <div>
+                        <Button>Cancelar</Button>
+                        <Button onClick={() => postHabit()} bg={true}>Salvar</Button>
+                    </div>
+                </Habit> : ""
             }
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             <Footer />

@@ -28,7 +28,6 @@ export default function Login() {
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
             body2);
         promise.then((res) => {
-            console.log(res.data);
             setUserImage(res.data.image)
             setLoading(false);
             navigate("/today");
@@ -49,7 +48,7 @@ export default function Login() {
                 <input disabled={loading ? true : false} type="email" placeholder="e-mail" onChange={e => setEmail(e.target.value)}></input>
                 <input disabled={loading ? true : false} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)}></input>
                 <button onClick={login}><PropagateLoader size={10} loading={loading} color="white" />{loading ? "" : "Entrar"}</button>
-                <Link to="/cadastro">
+                <Link to="/register">
                     <p>Não tem uma conta? Cadastre-se!</p>
 
                 </Link>
