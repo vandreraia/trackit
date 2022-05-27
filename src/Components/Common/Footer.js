@@ -49,11 +49,15 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    
     p {
         color: #52B6FF;
     }
+    
+    a {
+        text-decoration: none;
 
+    }
     div {
         width: 100px;
         /* background-color: #52B6FF; */
