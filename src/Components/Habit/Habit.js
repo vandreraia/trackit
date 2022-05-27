@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Header from "../Common/Header";
 import Footer from "../Common/Footer";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import HabitContext from "../../contexts/HabitContext";
 import MyHabit from './MyHabit';
 import TokenContext from '../../contexts/TokenContext';
@@ -11,7 +11,7 @@ import MapDays from './MapDays';
 
 
 export default function Habits() {
-    const { habitList, setHabitList } = useContext(HabitContext);
+    const { habitList } = useContext(HabitContext);
     const { token } = useContext(TokenContext);
     const [showHabit, setShowHabit] = useState(false);
     const [habit, setHabit] = useState();
@@ -24,10 +24,10 @@ export default function Habits() {
             name: habit,
             days: habitList
         };
-        const body2 = {
-            name: "Nome do hábito",
-            days: [1, 3, 5]
-        };
+        // const body2 = {
+        //     name: "Nome do hábito",
+        //     days: [1, 3, 5]
+        // };
         setLoading(true)
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
             body, token);
@@ -39,6 +39,16 @@ export default function Habits() {
         promise.catch(() =>
             console.log("habitpost error"))
     }
+
+    
+    useEffect(() => {
+        axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", token)
+            .then((res) =>
+                setMyHabits(res.data)
+            )
+            .catch(err => console.log("getHabit error", err))
+    }, [myHabits])
+
     return (
         <Container>
             <Header />

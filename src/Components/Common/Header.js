@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import ImageContext from "../../contexts/ImageContext";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 
 export default function Header() {
-    const { userImage, setUserImage } = useContext(ImageContext);
+    const { userImage } = useContext(ImageContext);
     return (
         <Link to="/">
             <Head>

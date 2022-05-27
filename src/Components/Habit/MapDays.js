@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import HabitContext from "../../contexts/HabitContext";
 
 export default function MapDays({ day, nDay }) {

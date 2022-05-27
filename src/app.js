@@ -3,11 +3,12 @@ import Habit from "./Components/Habit/Habit";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import History from "./Components/History";
-import Today from "./Components/Today";
+import Today from "./Components/Today/Today";
 import ImageContext from "./contexts/ImageContext";
 import HabitContext from "./contexts/HabitContext";
 import TokenContext from "./contexts/TokenContext";
 import MyHabitContext from "./contexts/MyHabitContext";
+// import { UserContext } from "./contexts/UserContext";
 import { useState } from "react";
 
 
@@ -24,21 +25,23 @@ export default function App() {
 
     return (
         <BrowserRouter>
-            <ImageContext.Provider value={contextImage}>
-                <HabitContext.Provider value={habitContext}>
-                    <MyHabitContext.Provider value={myHabitContext}>
-                        <TokenContext.Provider value={tokenContext}>
-                            <Routes>
-                                <Route path="/" element={<Login />} />
-                                <Route path="/habit" element={<Habit />} />
-                                <Route path="/register" element={<Register />} />
-                                <Route path="/history" element={<History />} />
-                                <Route path="/today" element={<Today />} />
-                            </Routes>
-                        </TokenContext.Provider>
-                    </MyHabitContext.Provider>
-                </HabitContext.Provider>
-            </ImageContext.Provider>
+            {/* <UserContext> */}
+                <ImageContext.Provider value={contextImage}>
+                    <HabitContext.Provider value={habitContext}>
+                        <MyHabitContext.Provider value={myHabitContext}>
+                            <TokenContext.Provider value={tokenContext}>
+                                <Routes>
+                                    <Route path="/" element={<Login />} />
+                                    <Route path="/habit" element={<Habit />} />
+                                    <Route path="/register" element={<Register />} />
+                                    <Route path="/history" element={<History />} />
+                                    <Route path="/today" element={<Today />} />
+                                </Routes>
+                            </TokenContext.Provider>
+                        </MyHabitContext.Provider>
+                    </HabitContext.Provider>
+                </ImageContext.Provider>
+            {/* </UserContext> */}
         </BrowserRouter>
     )
 }

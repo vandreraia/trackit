@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
@@ -13,12 +13,12 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
 
     function registerAcount(event) {
-        const body2 = {
-            email: "jadses@respondeai.com.br",
-            password: "123456",
-            name: "Joe",
-            image: "https://http.cat/411.jpg"
-        };
+        // const body2 = {
+        //     email: "jadses@respondeai.com.br",
+        //     password: "123456",
+        //     name: "Joe",
+        //     image: "https://http.cat/411.jpg"
+        // };
         const body = {
             email,
             password,

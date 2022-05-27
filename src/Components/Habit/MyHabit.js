@@ -1,18 +1,15 @@
 
 import MyHabitContext from '../../contexts/MyHabitContext';
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import styled from 'styled-components';
-import MapDays from './MapDays';
 import axios from 'axios';
 import TokenContext from '../../contexts/TokenContext';
 
 export default function MyHabit({ habit, selectedDays, id }) {
-    const { myHabits, setMyHabits } = useContext(MyHabitContext);
     const letters = ["D", "S", "T", "Q", "Q", "S", "S"];
     const { token } = useContext(TokenContext);
 
     function deleteHabit() {
-        let toggle = true;
         axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, token)
         .then(() => alert("confirm?"))
     }

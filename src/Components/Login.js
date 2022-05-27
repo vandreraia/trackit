@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
-import { useParams } from 'react-router-dom';
+import { useState, useContext } from "react";
 import axios from 'axios';
 import ImageContext from "../contexts/ImageContext";
 import TokenContext from '../contexts/TokenContext';
@@ -9,8 +8,8 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 
 
 export default function Login() {
-    const { userImage, setUserImage } = useContext(ImageContext);
-    const { token, setToken } = useContext(TokenContext);
+    const { setUserImage } = useContext(ImageContext);
+    const { setToken } = useContext(TokenContext);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [email, setEmail] = useState();
