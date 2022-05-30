@@ -1,11 +1,13 @@
 
 import TokenContext from '../../contexts/TokenContext';
+import PercentContext from "../../contexts/PercentContext";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-export default function Daily({ percentage, setPercentage }) {
+export default function Daily() {
     const { token } = useContext(TokenContext);
+    const { percentage, setPercentage } = useContext(PercentContext)
     const [habits, setHabits] = useState();
 
     useEffect(() => {
@@ -23,7 +25,8 @@ export default function Daily({ percentage, setPercentage }) {
                 count++;
             }
         });
-        setPercentage((count / habits.length) * 100);
+
+        setPercentage(((count / habits.length) * 100).toFixed(0));
 
         if (count) {
             return (
@@ -38,10 +41,10 @@ export default function Daily({ percentage, setPercentage }) {
     function checkDaily(id, done) {
         if (done) {
             axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, token)
-        } else 
-        axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, token)
-            .then(console.log(""))
-            .catch(err => console.log(err))
+        } else
+            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, token)
+                .then(console.log(""))
+                .catch(err => console.log(err))
     }
 
     return (

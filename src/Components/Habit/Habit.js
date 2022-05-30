@@ -36,7 +36,7 @@ export default function Habits() {
             console.log("habitpost error"))
     }
 
-    
+
     useEffect(() => {
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", token)
             .then((res) =>

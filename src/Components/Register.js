@@ -23,7 +23,7 @@ export default function Register() {
         event.preventDefault();
         console.log(body)
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up"
-        , body);
+            , body);
         promise.then((res) => {
             console.log(res)
             setLoading(false);

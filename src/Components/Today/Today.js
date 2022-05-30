@@ -11,12 +11,11 @@ import Daily from "./Daily";
 export default function Today() {
     const [myHabits, setMyHabits] = useState();
     const { token } = useContext(TokenContext);
-    const [percentage, setPercentage] = useState(0);
     let today = dayjs().get('day');
     let date = dayjs().get('date');
     let month = dayjs().get('month');
     month++;
-    
+
     function setDay() {
         if (today === 0) {
             today = "Domingo";
@@ -48,9 +47,9 @@ export default function Today() {
             <Header />
             <Container>
                 <h3>{today}, {date}/{month}</h3>
-                <Daily percentage={percentage} setPercentage={setPercentage} />
+                <Daily />
             </Container>
-            <Footer percentage={percentage} />
+            <Footer />
         </>
     )
 }

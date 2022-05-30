@@ -10,7 +10,7 @@ export default function MyHabit({ habit, selectedDays, id }) {
 
     function deleteHabit() {
         axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, token)
-        .then(() => alert("confirm?"))
+            .then(() => alert("confirm?"))
     }
 
     return (

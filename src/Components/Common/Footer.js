@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
+import PercentContext from "../../contexts/PercentContext";
+import { useContext } from 'react';
 import 'react-circular-progressbar/dist/styles.css';
 
-export default function Footer({ percentage }) {
+export default function Footer() {
+    const { percentage, setPercentage } = useContext(PercentContext)
 
     return (
         <>
