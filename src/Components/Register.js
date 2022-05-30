@@ -13,12 +13,6 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
 
     function registerAcount(event) {
-        // const body2 = {
-        //     email: "jadses@respondeai.com.br",
-        //     password: "123456",
-        //     name: "Joe",
-        //     image: "https://http.cat/411.jpg"
-        // };
         const body = {
             email,
             password,
@@ -38,7 +32,7 @@ export default function Register() {
         );
         promise.catch(() => {
             setLoading(false);
-            console.log("falha de registro");
+            alert("falha de registro");
         }
         );
     }

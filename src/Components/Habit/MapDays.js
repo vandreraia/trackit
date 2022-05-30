@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-import { useState, useContext } from "react";
-import HabitContext from "../../contexts/HabitContext";
+import { useState } from "react";
 
-export default function MapDays({ day, nDay }) {
+export default function MapDays({ day, nDay, habitList, setHabitList }) {
     const [clicked, setClicked] = useState(false);
-    const { habitList, setHabitList } = useContext(HabitContext);
 
     function createArr() {
         if (habitList.find(e => e === nDay) === undefined) {

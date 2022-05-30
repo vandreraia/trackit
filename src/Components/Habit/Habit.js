@@ -2,38 +2,34 @@ import styled from 'styled-components';
 import Header from "../Common/Header";
 import Footer from "../Common/Footer";
 import { useState, useContext, useEffect } from "react";
-import HabitContext from "../../contexts/HabitContext";
 import MyHabit from './MyHabit';
 import TokenContext from '../../contexts/TokenContext';
-import MyHabitContext from '../../contexts/MyHabitContext';
 import axios from 'axios';
 import MapDays from './MapDays';
 
 
 export default function Habits() {
-    const { habitList } = useContext(HabitContext);
+    const [habitList, setHabitList] = useState([]);
+    const [myHabits, setMyHabits] = useState();
     const { token } = useContext(TokenContext);
     const [showHabit, setShowHabit] = useState(false);
     const [habit, setHabit] = useState();
     const [loading, setLoading] = useState(false);
     const letters = ["D", "S", "T", "Q", "Q", "S", "S"];
-    const { myHabits, setMyHabits } = useContext(MyHabitContext);
 
+    console.log(myHabits, habitList)
     function postHabit() {
         const body = {
             name: habit,
             days: habitList
         };
-        // const body2 = {
-        //     name: "Nome do hábito",
-        //     days: [1, 3, 5]
-        // };
         setLoading(true)
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
             body, token);
         promise.then(() => {
             setLoading(false);
             setShowHabit(false);
+            setHabitList([])
         }
         )
         promise.catch(() =>
@@ -63,7 +59,7 @@ export default function Habits() {
                     <input disabled={loading ? true : false} type="text" placeholder='nome do hábito' onChange={e => setHabit(e.target.value)}></input>
                     <div>
                         {letters.map((day, index) =>
-                            <MapDays day={day} key={index} nDay={index} />
+                            <MapDays day={day} key={index} nDay={index} habitList={habitList} setHabitList={setHabitList} />
                         )}
                     </div>
                     <div>
@@ -73,7 +69,7 @@ export default function Habits() {
                 </Habit> : ""
             }
 
-            {myHabits.length !== 0
+            {(myHabits && myHabits.length !== 0)
                 ? myHabits.map((habit, index) =>
                     <MyHabit key={index} id={habit.id} habit={habit.name} selectedDays={habit.days} />
                 )

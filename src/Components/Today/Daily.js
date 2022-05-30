@@ -7,7 +7,6 @@ import styled from "styled-components";
 export default function Daily({ percentage, setPercentage }) {
     const { token } = useContext(TokenContext);
     const [habits, setHabits] = useState();
-    const [check, setCheck] = useState(false);
 
     useEffect(() => {
 

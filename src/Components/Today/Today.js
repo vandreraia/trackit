@@ -2,24 +2,21 @@
 import Header from "../Common/Header";
 import Footer from "../Common/Footer";
 import dayjs from 'dayjs';
-import MyHabitContext from '../../contexts/MyHabitContext';
 import TokenContext from '../../contexts/TokenContext';
-// import { UserContext } from "../../contexts/UserContext";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Daily from "./Daily";
 
 export default function Today() {
-    const { myHabits, setMyHabits } = useContext(MyHabitContext);
+    const [myHabits, setMyHabits] = useState();
     const { token } = useContext(TokenContext);
-    // const {user} = useContext(UserContext)
     const [percentage, setPercentage] = useState(0);
     let today = dayjs().get('day');
     let date = dayjs().get('date');
     let month = dayjs().get('month');
     month++;
-    // console.log(user)
+    
     function setDay() {
         if (today === 0) {
             today = "Domingo";
@@ -45,7 +42,7 @@ export default function Today() {
             )
             .catch(err => console.log("getHabit error", err))
     }, [myHabits])
-    // console.log("a", myHabits)
+
     return (
         <>
             <Header />

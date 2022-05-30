@@ -5,30 +5,20 @@ import Register from "./Components/Register";
 import History from "./Components/History";
 import Today from "./Components/Today/Today";
 import ImageContext from "./contexts/ImageContext";
-import HabitContext from "./contexts/HabitContext";
 import TokenContext from "./contexts/TokenContext";
-import MyHabitContext from "./contexts/MyHabitContext";
-// import { UserContext } from "./contexts/UserContext";
 import { useState } from "react";
 
 
 export default function App() {
     const [userImage, setUserImage] = useState([]);
     const contextImage = { userImage, setUserImage };
-    const [habitList, setHabitList] = useState([])
-    const habitContext = { habitList, setHabitList };
-    const [myHabits, setMyHabits] = useState([])
-    const myHabitContext = { myHabits, setMyHabits };
     const [token, setToken] = useState()
     const tokenContext = { token, setToken };
 
 
     return (
         <BrowserRouter>
-            {/* <UserContext> */}
                 <ImageContext.Provider value={contextImage}>
-                    <HabitContext.Provider value={habitContext}>
-                        <MyHabitContext.Provider value={myHabitContext}>
                             <TokenContext.Provider value={tokenContext}>
                                 <Routes>
                                     <Route path="/" element={<Login />} />
@@ -38,10 +28,7 @@ export default function App() {
                                     <Route path="/today" element={<Today />} />
                                 </Routes>
                             </TokenContext.Provider>
-                        </MyHabitContext.Provider>
-                    </HabitContext.Provider>
                 </ImageContext.Provider>
-            {/* </UserContext> */}
         </BrowserRouter>
     )
 }
